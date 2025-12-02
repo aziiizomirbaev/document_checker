@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Создать документ</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body {
+            min-height: 100vh;
+            display: flex;
+            margin: 0;
+            overflow-x: hidden;
+            background-color: #f8f9fa;
+        }
+
+
+        .sidebar {
+            width: 250px;
+            background-color: #343a40;
+            color: #fff;
+            flex-shrink: 0;
+            padding: 1rem;
+        }
+        .sidebar a {
+            color: #fff;
+            text-decoration: none;
+        }
+        .sidebar a:hover {
+            background-color: #495057;
+            text-decoration: none;
+        }
+
+        .content {
+            flex-grow: 1;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 2rem;
+        }
+
+        .card {
+            max-width: 600px;
+            width: 100%;
+        }
+        .btn-submit {
+            width: 100%;
+        }
+
+        form input,
+        form textarea,
+        form select {
+        width: 92%;
+        margin: 0;
+        font-family: inherit;
+        font-size: inherit;
+        line-height: inherit;
+    }
+    </style>
+</head>
+<body>
+
+<!-- Sidebar -->
+<div class="sidebar d-flex flex-column">
+    <h4 class="mb-4">Document_checker</h4>
+    <ul class="nav nav-pills flex-column mb-auto">
+        <li class="nav-item mb-2">
+            <a href="{% url 'document-list' %}" class="nav-link text-white">Документы</a>
+        </li>
+        <li class="nav-item mb-2">
+            <a href="{% url 'dashboard' %}" class="nav-link text-white">Дашборд</a>
+        </li>
+        <li class="nav-item mb-2">
+            <a href="{% url 'profile' %}" class="nav-link text-white">Профиль</a>
+        </li>
+        <li class="nav-item mb-2">
+            <a href="{% url 'logout' %}" class="nav-link text-white">Выйти</a>
+        </li>
+    </ul>
+</div>
+
+<!-- Основной контент -->
+<div class="content">
+
+    <div class="card shadow-sm p-4">
+        <div class="card-body">
+            <h1 class="mb-4">Создать новый документ</h1>
+            <form method="POST">
+                {% csrf_token %}
+
+                {% for field in form %}
+                    <div class="mb-3">
+                        {{ field.label_tag }}
+                        {{ field }}
+                        {% if field.errors %}
+                            <div class="text-danger small mt-1">
+                                {{ field.errors }}
+                            </div>
+                        {% endif %}
+                    </div>
+                {% endfor %}
+
+                <button type="submit" class="btn btn-primary btn-submit">Создать документ</button>
+            <a href="{% url 'document-list' %}" class="btn btn-outline-secondary w-100 mt-3">Назад к документам</a>
+            </form>
+        </div>
+    </div>
+
+
+</div>
+
+<!-- Bootstrap JS -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
